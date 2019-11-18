@@ -2,6 +2,8 @@
 #define GRACE
 
 #include <cstdlib>
+#include <cmath>
+#include <new>
 
 namespace grace {
     template <size_t BLOCK_SIZE = 16>
@@ -9,14 +11,14 @@ namespace grace {
         public:
         struct Header {
             size_t length;
-            Header() : length(0u) { };
-        }
+            Header() : length(0u) { }
+        };
 
         struct MemoryBlock : public Header {
             union {                
                 MemoryBlock * next;
-                char rawData[R_BLOCK_SIZE - HEADER_SIZE];
-            }
+                char rawData[BLOCK_SIZE];
+            };
 
             MemoryBlock() : Header(), next (nullptr) { };
         };
