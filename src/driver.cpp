@@ -1,27 +1,23 @@
-#include "../include/grace.hpp"
-#include "../include/pointer.hpp"
+// Allocate and discard objects.
 
 #include <new>
-
+#include "../include/grace.hpp"
+using namespace std;
 using namespace grace;
 
-int main () {
-    // MemoryPool<24> * memory = new MemoryPool<24>(1024);
-
-    GracePointer<int> p;
-    
+int main() {
     try {
-        p = new int;
-    } catch (bad_alloc e) {
-        std::cout << "Falha na alocação" << std::endl;
+        GracePointer<int> p = new int(1);
+        p = new int(2);
+        p = new int(3);
+        p = new int(4);
+
+        GracePointer<int>::collect();
+        cout << "*p: " << *p << endl;
+    } catch(bad_alloc exc) {
+        cout << "Allocation failure!\n";
         return 1;
     }
-
-    *p = 88;
-
-    cout << "Valor de p é: " << *p << std::endl;
-    int k = *p;
-    cout << "k é " << k << std::endl;
 
     return 0;
 }
